@@ -1,0 +1,4 @@
+redis\clients\jedis\tests\benchmark\PoolBenchmark$1.class
+redis\clients\jedis\tests\JedisPoolTest$1CrashingJedisPooledObjectFactory.class
+redis\clients\jedis\tests\JedisPoolTest$1CrashingJedis.class
+redis\clients\jedis\tests\JedisSentinelPoolTest$1.class
