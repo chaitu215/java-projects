@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!--扫描基包cn.com.niit.controller下的标注了Bean相关注解的类，将其作为Web层Spring容器管理的Bean -->
+	<context:component-scan base-package="evan.wang.controller"/>
+
+	<!-- 启用mvc的注解驱动,注册了以下类，以处理标注了@RequestMapping, @ExceptionHandler等注解的控制器方法 
+		RequestMappingHandlerMapping， RequestMappingHandlerAdapter， ExceptionHandlerExceptionResolver -->
+	<mvc:annotation-driven />
+
+	<!-- JSP视图解析器 -->
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<!-- 物理视图路径前缀 -->
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<!-- 物理视图路径前缀 -->
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!--基于commons-fileupload组件的文件上传 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 请求的编码格式 -->
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<!-- 上传文件大小上限，单位为字节, 此处设置10M -->
+		<property name="maxUploadSize" value="10485760"></property>
+		<!-- 上传文件的临时路径,/相对与当前Web项目根路径 -->
+		<property name="uploadTempDir" value="/temp"></property>
+	</bean>
+
+</beans>
