@@ -11,7 +11,7 @@ import java.util.function.Supplier;
  * @author: wangshengyong
  * @date: 2016年11月2日
  */
-public class Test {
+public class TestJava8 {
 	private String xx = "xx";
 
 	@Override
@@ -57,7 +57,7 @@ public class Test {
 		
 		Supplier<Runnable> c = () -> () -> { System.out.println("hi"); };
 	    new Thread(c.get()).start();
-	    Test test = new Test();
+	    TestJava8 test = new TestJava8();
 	    test.scope();
 	   
 	    List<Integer> numbers = Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
