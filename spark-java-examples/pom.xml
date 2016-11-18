@@ -10,11 +10,12 @@
 			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-core_2.10</artifactId>
 			<version>1.6.2</version>
-			<scope>provided</scope>
+			<!--<scope>provided</scope>-->
 		</dependency>
 	</dependencies>
 
 	<build>
+		<finalName>spark-java-examples</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
