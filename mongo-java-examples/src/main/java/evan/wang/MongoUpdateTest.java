@@ -2,6 +2,9 @@ package evan.wang;
 
 import static java.util.Arrays.asList;
 
+import java.util.Arrays;
+import java.util.Date;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.junit.After;
@@ -67,8 +70,8 @@ public class MongoUpdateTest {
 	public void updateTest3() {
 		UpdateResult result = db.getCollection("restaurants")
 		          .updateMany(new Document("address.zipcode", "10016").append("cuisine", "Other"),
-				    new Document("$set", new Document("cuisine", "Category To Be Determined")).append("$currentDate",
-					new Document("lastModified", true)));
+				    new Document("$set", new Document("cuisine", "Category To Be Determined"))
+				                         .append("$currentDate", new Document("lastModified", true)));
 		System.out.println("操作影响条数: " + result.getModifiedCount());
 	}
 	
@@ -87,6 +90,70 @@ public class MongoUpdateTest {
 		              .append("name", "Vella 2")
 		              .append("restaurant_id", "40361322")
 						);
+		System.out.println("操作影响条数: " + result.getModifiedCount());
+	}
+	
+	/**
+	 * "$push"会向已有的数组末尾加入一个元素，要是没有就创建一个新的数组
+	 */
+	@Test
+	public void updateTest5(){
+		UpdateResult result = db.getCollection("restaurants").updateOne(
+				new Document("_id", new ObjectId("57ac2918adb072953a976aa3")), 
+				//给grades(数组)添加一条内容
+				new Document("$push", new Document("grades", new Document("date",new Date())
+						                                     .append("grade", "C").append("score", 3))));
+		
+		System.out.println("操作影响条数: " + result.getModifiedCount());
+	}
+	
+	
+	/**
+	 * 使用"$each"子操作符，可以通过一次"$push"操作向数组添加多个值。
+	 */
+	@Test
+	public void updateTest6(){
+		UpdateResult result = db.getCollection("restaurants").updateOne(
+				new Document("_id", new ObjectId("57ac2918adb072953a976aa3")), 
+				new Document("$push", new Document("enjoy", new Document("$each", Arrays.asList("basketball", "swimming")))));
+		System.out.println("操作影响条数: " + result.getModifiedCount());
+	}
+	
+	
+	/**
+	 * "$addToSet"  保证插入数组内容不重复, 结合$each可以添加多个不重复的值。
+	 */
+	@Test
+	public void updateTest7(){
+		UpdateResult result = db.getCollection("restaurants").updateOne(
+				new Document("_id", new ObjectId("57ac2918adb072953a976aa3")), 
+				new Document("$addToSet", new Document("enjoy", "football"))
+				                      );
+		System.out.println("操作影响条数: " + result.getModifiedCount());
+	}
+	
+	
+	/**
+	 * "$pull" 删除数组中符合记录的数据
+	 */
+	@Test
+	public void updateTest8(){
+		UpdateResult result = db.getCollection("restaurants").updateOne(
+				new Document("_id", new ObjectId("57ac2918adb072953a976aa3")), 
+				new Document("$pull", new Document("enjoy", "football2")));
+		System.out.println("操作影响条数: " + result.getModifiedCount());
+	}
+	
+	
+	/**
+	 * {"$pop":{"key":1}}从数组末尾删除一个元素，
+	 * {"$pop":{"key":-1}}则从头部删除
+	 */
+	@Test
+	public void updateTest9(){
+		UpdateResult result = db.getCollection("restaurants").updateOne(
+				new Document("_id", new ObjectId("57ac2918adb072953a976aa3")), 
+				new Document("$pop", new Document("enjoy", 1)));
 		System.out.println("操作影响条数: " + result.getModifiedCount());
 	}
 	
