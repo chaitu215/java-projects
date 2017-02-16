@@ -20,7 +20,7 @@ public final class JavaSparkPi {
 
         //运行在驱动程序中,测试
         sparkConf.setMaster("local[2]")
-                 .set("spark.testing.memory", String.valueOf(768 * 1024 * 1024)); //768m
+                .set("spark.testing.memory", String.valueOf(768 * 1024 * 1024)); //768m
 
         JavaSparkContext jsc = new JavaSparkContext(sparkConf);
 

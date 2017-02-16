@@ -1,20 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package evan.wang.spark.examples;
 
 
@@ -103,17 +86,17 @@ public final class JavaPageRank {
     for (int current = 0; current < Integer.parseInt(args[1]); current++) {
       // Calculates URL contributions to the rank of other URLs.
       JavaPairRDD<String, Double> contribs = links.join(ranks).values()
-        .flatMapToPair(new PairFlatMapFunction<Tuple2<Iterable<String>, Double>, String, Double>() {
-          @Override
-          public Iterable<Tuple2<String, Double>> call(Tuple2<Iterable<String>, Double> s) {
-            int urlCount = Iterables.size(s._1);
-            List<Tuple2<String, Double>> results = new ArrayList<>();
-            for (String n : s._1) {
-              results.add(new Tuple2<>(n, s._2() / urlCount));
-            }
-            return results;
-          }
-      });
+              .flatMapToPair(new PairFlatMapFunction<Tuple2<Iterable<String>, Double>, String, Double>() {
+                @Override
+                public Iterable<Tuple2<String, Double>> call(Tuple2<Iterable<String>, Double> s) {
+                  int urlCount = Iterables.size(s._1);
+                  List<Tuple2<String, Double>> results = new ArrayList<>();
+                  for (String n : s._1) {
+                    results.add(new Tuple2<>(n, s._2() / urlCount));
+                  }
+                  return results;
+                }
+              });
 
       // Re-calculates URL ranks based on neighbor contributions.
       ranks = contribs.reduceByKey(new Sum()).mapValues(new Function<Double, Double>() {
@@ -127,7 +110,7 @@ public final class JavaPageRank {
     // Collects all URL ranks and dump them to console.
     List<Tuple2<String, Double>> output = ranks.collect();
     for (Tuple2<?,?> tuple : output) {
-        System.out.println(tuple._1() + " has rank: " + tuple._2() + ".");
+      System.out.println(tuple._1() + " has rank: " + tuple._2() + ".");
     }
 
     ctx.stop();
