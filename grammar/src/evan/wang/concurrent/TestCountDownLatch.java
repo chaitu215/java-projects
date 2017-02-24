@@ -11,12 +11,31 @@ public class TestCountDownLatch {
 
 	public void test() throws Exception {
 		int number = 5;
-		CountDownLatch latch = new CountDownLatch(number);
+		final CountDownLatch latch = new CountDownLatch(number);
+		
+		//启动5个耗时线程，每个线程任务完成后调用latch.countDown();
 		for (int i = 0; i < number; i++) {
 			new Thread(new Worker(latch, i)).start();
 		}
+		
+		//其它线程等待
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					System.out.println("other wait for all work done!");
+					latch.await(); //阻塞，直到循环中线程都完成
+					System.out.println("other finished");
+				} catch (Exception e) {
+				}
+			}
+		}).start();
+		
+		//主线程等待
 		System.out.println("wait for all work done!");
-		latch.await(); // 等待
+		latch.await(); //阻塞，直到循环中线程都完成
+		
+		
 		System.out.println("main finished");
 	}
 
