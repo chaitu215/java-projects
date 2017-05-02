@@ -6,7 +6,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <build>
     <sourceDirectory>src</sourceDirectory>
-    <finalName>spark-java-examples</finalName>
+    <finalName>spark-job</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -27,13 +27,7 @@
             </goals>
           </execution>
         </executions>
-        <configuration>
-          <transformers>
-            <transformer>
-              <mainClass>evan.wang.spark.mongodb.GettingStarted</mainClass>
-            </transformer>
-          </transformers>
-        </configuration>
+        <configuration />
       </plugin>
     </plugins>
   </build>
@@ -248,6 +242,18 @@
           <artifactId>jackson-databind</artifactId>
           <groupId>com.fasterxml.jackson.core</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>unused</artifactId>
+          <groupId>org.spark-project.spark</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-streaming_2.10</artifactId>
+      <version>1.6.2</version>
+      <scope>provided</scope>
+      <exclusions>
         <exclusion>
           <artifactId>unused</artifactId>
           <groupId>org.spark-project.spark</groupId>

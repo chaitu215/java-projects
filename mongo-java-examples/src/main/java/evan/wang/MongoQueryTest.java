@@ -1,8 +1,6 @@
 package evan.wang;
 
-import static com.mongodb.client.model.Filters.and;
-import static com.mongodb.client.model.Filters.exists;
-import static com.mongodb.client.model.Filters.gt;
+import static com.mongodb.client.model.Filters.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,6 +14,7 @@ import org.junit.Test;
 
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -161,6 +160,21 @@ public class MongoQueryTest {
 		
 		printResultSet(iterable);
 	}
+	
+	
+	/**
+	 * 查询数组不为null
+	 */
+	@Test
+	public void notNull() {
+		client = new MongoClient(new ServerAddress("192.168.10.115",10000));
+		db = client.getDatabase("shake");
+		// 获取集合
+		collection = db.getCollection("wxuser");
+		long count = collection.count(and(eq("original_id","gh_c23eed399388"),ne("tag_list", null)));
+		System.out.println(count);
+	}
+	
 
 	private Object asList(Object... d) {
 		return Arrays.asList(d);

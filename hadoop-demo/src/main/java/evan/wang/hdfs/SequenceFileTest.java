@@ -1,4 +1,4 @@
-package evan.wang;
+package evan.wang.hdfs;
 
 import java.net.URI;
 

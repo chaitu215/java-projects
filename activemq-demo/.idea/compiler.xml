@@ -23,10 +23,12 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="ActiveMQ" />
+        <module name="activemq-demo" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ActiveMQ" target="1.5" />
+      <module name="activemq-demo" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

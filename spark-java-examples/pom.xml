@@ -23,10 +23,18 @@
 			<artifactId>mongo-spark-connector_2.10</artifactId>
 			<version>1.1.0</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-streaming_2.10</artifactId>
+			<version>1.6.2</version>
+			<scope>provided</scope>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
-		<finalName>spark-java-examples</finalName>
+		<finalName>spark-job</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
@@ -42,12 +50,12 @@
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>2.4.3</version>
 				<configuration>
-					<transformers>
+					<!-- <transformers>
 						<transformer
 							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 							<mainClass>evan.wang.spark.mongodb.GettingStarted</mainClass>
 						</transformer>
-					</transformers>
+					</transformers> -->
 				</configuration>
 				<executions>
 					<execution>

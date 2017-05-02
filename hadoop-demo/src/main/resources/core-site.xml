@@ -3,7 +3,7 @@
 <configuration>
     <property>
         <name>fs.defaultFS</name>
-        <!-- <value>hdfs://192.168.1.222:9000</value> -->
-        <value>hdfs://192.168.10.121:8020</value>
+        <value>hdfs://192.168.10.132:9000</value>
+        <!-- <value>hdfs://192.168.10.121:8020</value> -->
     </property>
 </configuration>

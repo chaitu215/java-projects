@@ -154,5 +154,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.parquet:parquet-jackson:1.7.0" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb.spark:mongo-spark-connector_2.10:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:3.2.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.spark:spark-streaming_2.10:1.6.2" level="project" />
   </component>
 </module>

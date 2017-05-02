@@ -20,8 +20,8 @@ import java.util.Date;
  */
 public class HdfsTest {
     private static final String LOCAL_PATH = "D:/test";
-    //private static final String HDFS_PATH = "hdfs://192.168.1.222:9000/user/wangsy/temp/";
-    private static final String HDFS_PATH = "/user/wangsy/temp/";
+    private static final String HDFS_PATH = "hdfs://192.168.1.222:9000/";
+    //private static final String HDFS_PATH = "/user/wangsy/temp/";
     private FileSystem hdfs;
 
     /**
@@ -33,7 +33,7 @@ public class HdfsTest {
     public void before() throws Exception {
         Configuration conf = new Configuration();
         //指定操作hadoop的用户, 或者HDFS上保证其它用户有写入的权限： hdfs dfs -chmod +w /user/wangsy/temp
-        System.setProperty("HADOOP_USER_NAME", "wangsy");
+        System.setProperty("HADOOP_USER_NAME", "root");
         hdfs = FileSystem.get(conf);
     }
 

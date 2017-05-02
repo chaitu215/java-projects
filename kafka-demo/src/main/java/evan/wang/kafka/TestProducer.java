@@ -2,11 +2,12 @@ package evan.wang.kafka;
 
 import java.util.Date;
 import java.util.Properties;
-import java.util.Random;
 
+import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 
 /**
  * 
@@ -31,17 +32,47 @@ public class TestProducer {
 		props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
 		Producer<String, String> producer = new KafkaProducer<>(props);
-		Random random = new Random();
 		for (int i = 0; i < 100; i++) {
-			String ip = "192.168.10." + random.nextInt(255);
-			long runTime = new Date().getTime();
-			String message = runTime + ", www.example.com, " + ip;
-			producer.send(new ProducerRecord<>("test", ip, message));
+			long startTime = System.currentTimeMillis();
+			String key = "key-" + i;
+			String message = new Date(startTime).getTime() + ", www.example.com, ";
+			try {
+			   //异步发送，回调方法在请求完成时将被回调
+			   producer.send(new ProducerRecord<>("mytopic0", key, message), new DemoCallBack(startTime, key, message));
+			   //同步发送，调用get(),则将阻塞，直到相关请求完成并返回该消息的metadata，或抛出发送异常 
+			   //producer.send(new ProducerRecord<>("mytopic0", key, message)).get();
+			}catch (Exception e) {
+			   e.printStackTrace();
+			}
 		}
 		producer.close();
 	}
 
-}
+	static class DemoCallBack implements Callback {
 
+		private final long startTime;
+		private final String key;
+		private final String message;
+
+		public DemoCallBack(long startTime, String key, String message) {
+			this.startTime = startTime;
+			this.key = key;
+			this.message = message;
+		}
+
+		@Override
+		public void onCompletion(RecordMetadata metadata, Exception exception) {
+			long elapsedTime = System.currentTimeMillis() - startTime; //经历时间
+	        if (metadata != null) {
+	            System.out.println( "message(" + key + ", " + message + ") sent to partition(" + metadata.partition() + "), " 
+	        +"offset(" + metadata.offset() + ") in " + elapsedTime + " ms");
+	        } else {
+	            exception.printStackTrace();
+	        }
+		}
+
+	}
+
+}
 
 // https://github.com/apache/kafka/tree/trunk/examples/src/main/java/kafka/examples
