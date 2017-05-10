@@ -25,11 +25,11 @@ public class TestConsumer extends ShutdownableThread {
 	 * @param name
 	 * @param isInterruptible
 	 */
-	public TestConsumer(String topic) {
+	private TestConsumer(String topic) {
 		super("KafkaConsumerExample", false);
 		this.topic = topic;
 		Properties props = new Properties();
-		props.put("bootstrap.servers", "192.168.10.121:9092,192.168.10.122:9092");
+		props.put("bootstrap.servers", "192.168.10.134:9092,192.168.10.135:9092,192.168.10.136:9092");
 		props.put("group.id", "DemoConsumer"); // 订阅的消息只能够被同一个组中的一个消费者消费，可以被多个消费者组订阅
 		props.put("enable.auto.commit", "false"); // 自动提交偏移量
 		props.put("auto.commit.interval.ms", "1000");
@@ -64,10 +64,9 @@ public class TestConsumer extends ShutdownableThread {
 	}
 
 	// 处理消息
-	public boolean handleRecord(List<ConsumerRecord<String, String>> list) {
+	private boolean handleRecord(List<ConsumerRecord<String, String>> list) {
 		for (ConsumerRecord<String, String> record : list) {
-			System.out.println(
-					"Received message: (" + record.key() + ", " + record.value() + ") at offset " + record.offset());
+			System.out.println("Received message: (" + record.key() + ", " + record.value() + ") at offset " + record.offset());
 		}
 		return true;
 	}

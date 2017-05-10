@@ -1,13 +1,9 @@
 package evan.wang.kafka;
 
+import org.apache.kafka.clients.producer.*;
+
 import java.util.Date;
 import java.util.Properties;
-
-import org.apache.kafka.clients.producer.Callback;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
 
 /**
  * 
@@ -20,9 +16,10 @@ public class TestProducer {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		String myTopic = "wangshengyong";
 
 		Properties props = new Properties();
-		props.put("bootstrap.servers", "192.168.10.121:9092,192.168.10.122:9092,192.168.10.123:9092");
+		props.put("bootstrap.servers", "192.168.10.134:9092,192.168.10.135:9092,192.168.10.136:9092");
 		props.put("acks", "all");
 		props.put("retries", 0);
 		props.put("batch.size", 16384);
@@ -38,7 +35,7 @@ public class TestProducer {
 			String message = new Date(startTime).getTime() + ", www.example.com, ";
 			try {
 			   //异步发送，回调方法在请求完成时将被回调
-			   producer.send(new ProducerRecord<>("mytopic0", key, message), new DemoCallBack(startTime, key, message));
+			   producer.send(new ProducerRecord<>(myTopic, key, message), new DemoCallBack(startTime, key, message));
 			   //同步发送，调用get(),则将阻塞，直到相关请求完成并返回该消息的metadata，或抛出发送异常 
 			   //producer.send(new ProducerRecord<>("mytopic0", key, message)).get();
 			}catch (Exception e) {
