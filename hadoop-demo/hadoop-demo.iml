@@ -25,7 +25,6 @@
     <orderEntry type="library" name="Maven: commons-digester:commons-digester:1.8" level="project" />
     <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.7.0" level="project" />
     <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils-core:1.8.0" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.2.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.curator:curator-client:2.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.curator:curator-recipes:2.7.1" level="project" />
@@ -166,9 +165,17 @@
     <orderEntry type="library" name="Maven: org.apache.flume:flume-ng-sdk:1.7.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.avro:avro:1.7.4" level="project" />
     <orderEntry type="library" name="Maven: com.thoughtworks.paranamer:paranamer:2.3" level="project" />
-    <orderEntry type="library" name="Maven: org.xerial.snappy:snappy-java:1.0.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.avro:avro-ipc:1.7.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.velocity:velocity:1.7" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty:3.9.4.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.twitter:parquet-common:1.6.0" level="project" />
+    <orderEntry type="library" name="Maven: com.twitter:parquet-column:1.6.0" level="project" />
+    <orderEntry type="library" name="Maven: com.twitter:parquet-encoding:1.6.0" level="project" />
+    <orderEntry type="library" name="Maven: com.twitter:parquet-generator:1.6.0" level="project" />
+    <orderEntry type="library" name="Maven: com.twitter:parquet-hadoop:1.6.0" level="project" />
+    <orderEntry type="library" name="Maven: com.twitter:parquet-format:2.2.0-rc1" level="project" />
+    <orderEntry type="library" name="Maven: com.twitter:parquet-jackson:1.6.0" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.11" level="project" />
+    <orderEntry type="library" name="Maven: org.xerial.snappy:snappy-java:1.1.1.6" level="project" />
   </component>
 </module>

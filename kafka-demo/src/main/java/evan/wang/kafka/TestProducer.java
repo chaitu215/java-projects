@@ -16,7 +16,7 @@ public class TestProducer {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String myTopic = "wangshengyong";
+		final String myTopic = "wangshengyong";
 
 		Properties props = new Properties();
 		props.put("bootstrap.servers", "192.168.10.134:9092,192.168.10.135:9092,192.168.10.136:9092");

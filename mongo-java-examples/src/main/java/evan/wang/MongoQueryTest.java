@@ -4,7 +4,9 @@ import static com.mongodb.client.model.Filters.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import org.bson.Document;
@@ -173,6 +175,12 @@ public class MongoQueryTest {
 		collection = db.getCollection("wxuser");
 		long count = collection.count(and(eq("original_id","gh_c23eed399388"),ne("tag_list", null)));
 		System.out.println(count);
+	}
+	
+	@Test
+	public void testDistinct(){
+		List<String> list = collection.distinct("cuisine", String.class).into(new ArrayList<>());
+		System.out.println(list);
 	}
 	
 
