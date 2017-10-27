@@ -15,7 +15,6 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /**
  * 统计单词示例
- *
  * @author: wangshengyong
  * @date: 2016年11月10日
  */
@@ -23,10 +22,16 @@ public class WordCount {
 	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
 		private final static IntWritable one = new IntWritable(1);
 		private Text word = new Text();
-
+        
+		/**
+		 * @param key :   默认是字符偏移量
+		 * @param value : 默认是一行 
+		 * @param Mapper<Object, Text, Text, IntWritable> 第一二个表示输入map的key和value, 第三四个表示输出的key和value
+		 */
 		@Override
 		protected void map(Object key, Text value, Mapper<Object, Text, Text, IntWritable>.Context context)
 				throws IOException, InterruptedException {
+			System.out.println("********************map函数**********************");
 			System.out.println("key: " + key);
 			System.out.println("value: " + value);
 
@@ -50,6 +55,7 @@ public class WordCount {
 			for (IntWritable val : values) {
 				sum += val.get();
 			}
+			System.out.println("********************reduce函数**********************");
 			System.out.println("key: " + key);
 			System.out.println("value: " + sum);
 			result.set(sum);
@@ -63,24 +69,16 @@ public class WordCount {
 	public static void main(String[] args) throws Exception {
 		String inputPath = "/user/wangsy/data/input";
 		String outputPath = "/user/wangsy/data/output";
-
-		// if (args.length < 1) {
-		// System.err.println("please set input path");
-		// System.exit(1);
-		// } else {
-		// inputPath = args[0];
-		// }
-		// if (args.length < 2) {
-		// System.err.println("please set output path");
-		// System.exit(1);
-		// } else {
-		// outputPath = args[1];
-		// }
-
+		if (args.length > 0) {
+			inputPath = args[0];
+		}
+		if (args.length > 1) {
+			outputPath = args[1];
+		}
+		
 		Configuration conf = new Configuration();
-
 		// 先删除output目录
-		MrUtil.deleteDir(conf, args[1]);
+		MrUtil.deleteDir(conf, outputPath);
 
 		Job job = Job.getInstance(conf);
 		job.setJarByClass(WordCount.class);

@@ -71,7 +71,7 @@ public class CsvFileToHbase {
 		String filePath = "E:\\spring-sts-workspace\\java-examples\\hadoop-demo\\src\\main\\java\\evan\\wang\\hbase\\股票资产.csv";
 		CsvReader csv = new CsvReader(filePath, ',', Charset.forName("GBK"));
 		csv.setSafetySwitch(false);
-		csv.setUseTextQualifier(false); // 读的时候内容是不被默认引用符(")包围的
+		csv.setUseTextQualifier(true); //读的时候内容是被默认引用符(")包围的
 		TableName tableName = TableName.valueOf(TABLE_NAME);
 		try (Table table = connection.getTable(tableName);) {
 			int index = 0;

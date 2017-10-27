@@ -1,5 +1,11 @@
 package evan.wang.spark.examples;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Pattern;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
@@ -8,12 +14,8 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.FlatMapFunction;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
-import scala.Tuple2;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Pattern;
+import scala.Tuple2;
 
 /**
  * 单词统计
@@ -29,7 +31,8 @@ public final class JavaWordCount {
      * 参数： 输入统计单词的文件路径， 输出结果的文件路径(需要不存在)
      * @param args
      */
-    public static void main(String[] args) throws Exception {
+    @SuppressWarnings("serial")
+	public static void main(String[] args) throws Exception {
         if (args.length < 1) {
             System.err.println("please set input file");
             System.exit(1);
@@ -55,8 +58,8 @@ public final class JavaWordCount {
         JavaRDD<String> lines = ctx.textFile(args[0], 1);
         JavaRDD<String> words = lines.flatMap(new FlatMapFunction<String, String>() {
             @Override
-            public Iterable<String> call(String s) {
-                return Arrays.asList(SPACE.split(s));
+            public Iterator<String> call(String s) {
+                return Arrays.asList(SPACE.split(s)).iterator();
             }
         });
         JavaPairRDD<String, Integer> ones = words.mapToPair(new PairFunction<String, String, Integer>() {
@@ -76,6 +79,6 @@ public final class JavaWordCount {
         for (Tuple2<?, ?> tuple : output) {
             System.out.println(tuple._1() + ": " + tuple._2());
         }
-        ctx.stop();
+        ctx.close();
     }
 }

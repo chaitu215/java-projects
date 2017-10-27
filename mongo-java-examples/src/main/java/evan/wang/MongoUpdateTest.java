@@ -26,7 +26,8 @@ public class MongoUpdateTest {
 	@Before
 	public void testConn() {
 		startTime = System.currentTimeMillis();
-		client = LocalMongoClient.getMongoClient();
+		//client = LocalMongoClient.getMongoClient();
+		client = LocalMongoClient.getMongoClient(1, "127.0.0.1", 27017, "admin", "wangsy", "123456");
 		// 获取数据库
 		db = client.getDatabase("test");
 	}
@@ -99,7 +100,7 @@ public class MongoUpdateTest {
 	@Test
 	public void updateTest5(){
 		UpdateResult result = db.getCollection("restaurants").updateOne(
-				new Document("_id", new ObjectId("57ac2918adb072953a976aa3")), 
+				new Document("_id", new ObjectId("5916ca477f0f35a698bff684")), 
 				//给grades(数组)添加一条内容
 				new Document("$push", new Document("grades", new Document("date",new Date())
 						                                     .append("grade", "C").append("score", 3))));

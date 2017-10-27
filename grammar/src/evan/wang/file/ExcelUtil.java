@@ -131,6 +131,9 @@ public class ExcelUtil {
                 //cellValue = String.valueOf(cell.getCellFormula());  
             	FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
             	cellValue = String.valueOf( evaluator.evaluate(cell).getNumberValue());
+            	if(cellValue!=null && cellValue.equals("0.0")){
+            		cellValue = "";
+            	}
             	/*try {
             		cellValue = String.valueOf(cell.getNumericCellValue());
             	} catch (IllegalStateException e) {
