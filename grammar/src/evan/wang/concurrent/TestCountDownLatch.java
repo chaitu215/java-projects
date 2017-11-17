@@ -27,6 +27,7 @@ public class TestCountDownLatch {
 					latch.await(); //阻塞，直到循环中线程都完成
 					System.out.println("other finished");
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		}).start();
