@@ -1,6 +1,6 @@
-package com.foxx.dao;
+package evan.wang.dao;
 
-import com.foxx.bean.Restaurants;
+import evan.wang.bean.Restaurants;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**

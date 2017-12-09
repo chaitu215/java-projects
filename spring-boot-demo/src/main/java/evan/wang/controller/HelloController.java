@@ -1,7 +1,7 @@
-package com.foxx.controller;
+package evan.wang.controller;
 
 
-import com.foxx.bean.User;
+import evan.wang.bean.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

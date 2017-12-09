@@ -1,4 +1,4 @@
-package com.foxx.bean;
+package evan.wang.bean;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

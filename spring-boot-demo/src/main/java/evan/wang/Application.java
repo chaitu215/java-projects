@@ -1,4 +1,4 @@
-package com.foxx;
+package evan.wang;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

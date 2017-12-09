@@ -1,4 +1,4 @@
-package com.foxx;
+package evan.wang;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;

@@ -1,6 +1,6 @@
-package com.foxx.service;
+package evan.wang.service;
 
-import com.foxx.bean.User;
+import evan.wang.bean.User;
 
 /**
  * 作者：wangsy

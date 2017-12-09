@@ -1,8 +1,8 @@
-package com.foxx.service.impl;
+package evan.wang.service.impl;
 
-import com.foxx.bean.User;
-import com.foxx.dao.UserRepository;
-import com.foxx.service.UserService;
+import evan.wang.bean.User;
+import evan.wang.dao.UserRepository;
+import evan.wang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

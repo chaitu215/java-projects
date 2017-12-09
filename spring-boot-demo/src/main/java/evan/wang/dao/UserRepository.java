@@ -1,6 +1,6 @@
-package com.foxx.dao;
+package evan.wang.dao;
 
-import com.foxx.bean.User;
+import evan.wang.bean.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
