@@ -1,6 +1,11 @@
 package evan.wang.spark.examples;
 
-import org.apache.commons.io.FileUtils;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.apache.hadoop.conf.Configuration;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -8,12 +13,8 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.FlatMapFunction;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
-import scala.Tuple2;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Pattern;
+import scala.Tuple2;
 
 /**
  * 单词统计
@@ -29,7 +30,8 @@ public final class JavaWordCount {
      * 参数： 输入统计单词的文件路径， 输出结果的文件路径(需要不存在)
      * @param args
      */
-    public static void main(String[] args) throws Exception {
+    @SuppressWarnings("serial")
+	public static void main(String[] args) throws Exception {
         if (args.length < 1) {
             System.err.println("please set input file");
             System.exit(1);
@@ -40,8 +42,8 @@ public final class JavaWordCount {
         }
 
         //删除输出目录
-        File outputDir = new File(args[1]);
-        FileUtils.forceDeleteOnExit(outputDir);
+        Configuration conf = new Configuration();
+        MrUtil.deleteDir(conf, args[1]);
 
         //运行在spark-submit任务中
         //SparkConf sparkConf = new SparkConf().setAppName("JavaWordCount")
@@ -49,14 +51,15 @@ public final class JavaWordCount {
         //运行在驱动程序中,测试
         SparkConf sparkConf = new SparkConf()
                 .setAppName("JavaWordCount")
-                .setMaster("local[2]")
-                .set("spark.testing.memory", String.valueOf(768 * 1024 * 1024)); //768m
+                //.setMaster("local[2]")
+                .set("spark.executor.memory", "512m");
+               
         JavaSparkContext ctx = new JavaSparkContext(sparkConf);
         JavaRDD<String> lines = ctx.textFile(args[0], 1);
         JavaRDD<String> words = lines.flatMap(new FlatMapFunction<String, String>() {
             @Override
-            public Iterable<String> call(String s) {
-                return Arrays.asList(SPACE.split(s));
+            public Iterator<String> call(String s) {
+                return Arrays.asList(SPACE.split(s)).iterator();
             }
         });
         JavaPairRDD<String, Integer> ones = words.mapToPair(new PairFunction<String, String, Integer>() {
@@ -72,10 +75,12 @@ public final class JavaWordCount {
             }
         });
         counts.saveAsTextFile(args[1]);
-        List<Tuple2<String, Integer>> output = counts.collect();
-        for (Tuple2<?, ?> tuple : output) {
-            System.out.println(tuple._1() + ": " + tuple._2());
+        List<Tuple2<String, Integer>> output = counts.take(100);
+        if(output!=null){
+	        for (Tuple2<?, ?> tuple : output) {
+	            System.out.println(tuple._1() + ": " + tuple._2());
+	        }
         }
-        ctx.stop();
+        ctx.close();
     }
 }

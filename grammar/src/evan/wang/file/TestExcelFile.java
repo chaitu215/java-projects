@@ -32,21 +32,24 @@ public class TestExcelFile {
 		HSSFWorkbook wb = new HSSFWorkbook();
 		String sheetName = "结果";
 		HSSFSheet sheet = wb.createSheet(sheetName);
-		insert(wb, sheet, sheet.createRow(0), "code", "year", "利润总额", "贷款总额", "投资收益", "固定资产价格", "人力资本价格", "资金价格");
+		insert(wb, sheet, sheet.createRow(0), "code", "num", "year", "利润总额", "贷款总额", "投资收益", "固定资产价格", "人力资本价格", "资金价格");
 
 		int rowNum = 1;
-		for (int i = 0; i < list.get(i).length; i++) {
+		for (int i = 0; i < list.size(); i++) {
+			if(i==119){
+				break;
+			}
 			String[] value = list.get(i);
 			System.out.println(value.length + ",   " + i);
 			if(value.length<=76){
 				continue;
 			}
-			String[] value1 = new String[] { value[1], "2010", value[4], value[58], value[34], value[69], value[76], value[82]};
-			String[] value2 = new String[] { value[1], "2011", value[5], value[59], value[35], value[68], value[75], value[81]};
-			String[] value3 = new String[] { value[1], "2012", value[6], value[60], value[36], value[67], value[74], value[80]};
-			String[] value4 = new String[] { value[1], "2013", value[7], value[61], value[37], value[66], value[73], value[79]};
-			String[] value5 = new String[] { value[1], "2014", value[8], value[62], value[38], value[65], value[72], value[78]};
-			String[] value6 = new String[] { value[1], "2015", value[9], value[63], value[39], value[64], value[70], value[77]};
+			String[] value1 = new String[] { value[1], String.valueOf(i+1), "2010", value[4], value[58], value[34], value[69], value[76], value[82]};
+			String[] value2 = new String[] { value[1], String.valueOf(i+1), "2011", value[5], value[59], value[35], value[68], value[75], value[81]};
+			String[] value3 = new String[] { value[1], String.valueOf(i+1), "2012", value[6], value[60], value[36], value[67], value[74], value[80]};
+			String[] value4 = new String[] { value[1], String.valueOf(i+1), "2013", value[7], value[61], value[37], value[66], value[73], value[79]};
+			String[] value5 = new String[] { value[1], String.valueOf(i+1), "2014", value[8], value[62], value[38], value[65], value[72], value[78]};
+			String[] value6 = new String[] { value[1], String.valueOf(i+1), "2015", value[9], value[63], value[39], value[64], value[70], value[77]};
 			insert(wb, sheet, sheet.createRow(rowNum++), value1);
 			insert(wb, sheet, sheet.createRow(rowNum++), value2);
 			insert(wb, sheet, sheet.createRow(rowNum++), value3);
